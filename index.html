@@ -2,17 +2,31 @@
 <html>
 <head>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
-        video {
-            position: fixed; right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            object-fit: fill;
-        }
-    </style>
+    /* Убираем все отступы и скрываем скроллбары */
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+    }
+
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* Жестко задаем размеры по размеру окна */
+        width: 100%;
+        height: 100%;
+        /* fill игнорирует пропорции и растягивает видео точно по границам */
+        object-fit: fill;
+        display: block;
+    }
+</style>
 </head>
 <body>
-    <video autoplay loop muted playsinline id="bgvideo">
+    <video autoplay loop playsinline id="bgvideo">
         <source src="video/claim.webm" type="video/webm">
         </video>
 
