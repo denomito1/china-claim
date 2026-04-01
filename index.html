@@ -2,65 +2,40 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Screen Video</title>
     <style>
-        /* Убираем отступы у страницы */
-        body, html {
+        /* Полное обнуление отступов и скрытие прокрутки */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
             background-color: #000;
         }
 
-        /* Контейнер и само видео */
-        .video-container {
+        video {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            /* cover растягивает видео, обрезая края, чтобы не было полос */
-            /* Если нужно просто вписать (с полосами), замените на contain */
-            object-fit: cover;
+            width: 100vw;
+            height: 100vh;
+            /* 'fill' растянет видео ровно на весь экран.
+               Если нужно сохранить пропорции, используйте 'cover' */
+            object-fit: fill;
             display: block;
         }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <video
-            autoplay
-            muted
-            loop
-            playsinline
-            id="bg-video">
-            <source src="video/claim.mp4" type="video/mp4">
-            Ваш браузер не поддерживает тег видео.
-        </video>
-    </div>
-
-    <script>
-        // Небольшой костыль для обхода блокировок автоплея в некоторых браузерах
-        window.addEventListener('load', function() {
-            var video = document.getElementById('bg-video');
-            video.play().catch(function(error) {
-                console.log("Автозапуск заблокирован, ожидание клика...");
-                // Если автоплей не сработал, видео запустится после первого клика по экрану
-                document.body.addEventListener('click', function() {
-                    video.play();
-                }, { once: true });
-            });
-        });
-    </script>
+    <video autoplay loop playsinline>
+        <source src="video/claim.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
 </body>
 </html>
