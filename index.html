@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <style>
-        /* Полное обнуление отступов и скрытие прокрутки */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-        }
-
-        video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            /* 'fill' растянет видео ровно на весь экран.
-               Если нужно сохранить пропорции, используйте 'cover' */
-            object-fit: fill;
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Fullscreen Video</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* растягиваем, сохраняя пропорции, обрезая лишнее */
+    }
+  </style>
 </head>
 <body>
+  <video id="bgVideo"
+         src="video/claim.mp4"
+         autoplay
+         playsinline>
+    Ваш браузер не поддерживает видео.
+  </video>
 
-    <video autoplay loop playsinline>
-        <source src="video/claim.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+  <script>
+    const video = document.getElementById('bgVideo');
 
+    // как только можно играть — пробуем включить полноэкранный режим
+    function goFullscreen() {
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {});
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
+    }
+
+    // запускаем воспроизведение и fullscreen после загрузки
+    window.addEventListener('load', () => {
+      video.play().then(goFullscreen).catch(goFullscreen);
+    });
+  </script>
 </body>
 </html>
