@@ -1,45 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Fullscreen Video</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-    }
-    video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: fill; /* РАСТЯГИВАЕМ БЕЗ СОХРАНЕНИЯ ПРОПОРЦИЙ */
-    }
-  </style>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
+        video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            object-fit: fill;
+        }
+    </style>
 </head>
 <body>
-  <video id="bgVideo"
-         src="video/claim.mp4"
-         autoplay
-         playsinline>
-  </video>
+    <video autoplay loop muted playsinline id="bgvideo">
+        <source src="video/claim.mp4" type="video/mp4">
+        </video>
 
-  <script>
-    const video = document.getElementById('bgVideo');
-
-    function goFullscreen() {
-      if (video.requestFullscreen) video.requestFullscreen();
-      else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
-      else if (video.msRequestFullscreen) video.msRequestFullscreen();
-    }
-
-    window.addEventListener('load', () => {
-      video.play().then(goFullscreen).catch(goFullscreen);
-    });
-  </script>
+    <script>
+        var vid = document.getElementById("bgvideo");
+        vid.onloadstart = function() {
+            vid.play();
+        };
+        // Форсированный старт для GMod
+        document.addEventListener('DOMContentLoaded', function() {
+            vid.play();
+        });
+    </script>
 </body>
 </html>
