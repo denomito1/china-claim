@@ -17,7 +17,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      object-fit: cover; /* растягиваем, сохраняя пропорции, обрезая лишнее */
+      object-fit: fill; /* РАСТЯГИВАЕМ БЕЗ СОХРАНЕНИЯ ПРОПОРЦИЙ */
     }
   </style>
 </head>
@@ -26,24 +26,17 @@
          src="video/claim.mp4"
          autoplay
          playsinline>
-    Ваш браузер не поддерживает видео.
   </video>
 
   <script>
     const video = document.getElementById('bgVideo');
 
-    // как только можно играть — пробуем включить полноэкранный режим
     function goFullscreen() {
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {});
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
+      if (video.requestFullscreen) video.requestFullscreen();
+      else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+      else if (video.msRequestFullscreen) video.msRequestFullscreen();
     }
 
-    // запускаем воспроизведение и fullscreen после загрузки
     window.addEventListener('load', () => {
       video.play().then(goFullscreen).catch(goFullscreen);
     });
